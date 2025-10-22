@@ -1,4 +1,4 @@
-package br.com.innovarix.runningclub.core_theme
+package br.com.innovarix.runningclub.core_theme.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,17 +9,20 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import br.com.innovarix.runningclub.core_theme.theme.RCColors.Beige
+import br.com.innovarix.runningclub.core_theme.theme.RCColors.Black
+import br.com.innovarix.runningclub.core_theme.theme.RCColors.Brown
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Black,
+    secondary = Beige,
+    tertiary = Brown
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Black,
+    secondary = Beige,
+    tertiary = Brown
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
