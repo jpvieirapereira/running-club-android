@@ -12,9 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.innovarix.runningclub.core_theme.components.button.RCButtonStyleType
-import br.com.innovarix.runningclub.core_theme.components.button.RCButtonText
+import br.com.innovarix.runningclub.core_theme.components.input.RCInput
+import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbar
+import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbarStyleType
 import br.com.innovarix.runningclub.core_theme.theme.RunningClubTheme
+import br.com.innovarix.runningclub.register.RCRegisterScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,10 +25,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             RunningClubTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier.padding(innerPadding)) {
-                        RCButtonText(text = "Ok, entendi") { }
-
-                        RCButtonText(text = "Ok, entendi", colors = RCButtonStyleType.SECONDARY) { }
+                    Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                       RCRegisterScreen()
                     }
                 }
             }
@@ -34,18 +34,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
+@Preview(showBackground = false)
 @Composable
 fun GreetingPreview() {
     RunningClubTheme {
-        Greeting("Android")
+        Column {
+            RCInput(label = "Nome completo")
+
+            RCInput(label = "Nome completo", value = "jose", error = "Campo obrigatório")
+
+            RCToolbar(text = "Teste Nivelamento")
+
+            RCToolbar(colors = RCToolbarStyleType.SECONDARY, text = "Teste Nivelamento")
+        }
     }
 }

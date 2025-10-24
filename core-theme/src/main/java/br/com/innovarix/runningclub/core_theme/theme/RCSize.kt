@@ -22,27 +22,20 @@ object RCSize {
         val xs = 4.dp
         val sm = 8.dp
         val md = 16.dp
+        val mdd = 20.dp
         val lg = 24.dp
         val xl = 32.dp
+        val xll = 44.dp
         val xxl = 48.dp
     }
 
     object Icons {
-        val xs = 16.dp
-        val sm = 20.dp
-        val md = 24.dp
-        val lg = 32.dp
+        val xs = 14.dp
+        val sm = 16.dp
+        val md = 18.dp
+        val lg = 24.dp
         val xl = 40.dp
         val xxl = 48.dp
-    }
-
-    object IconsSize {
-        val xs = 16
-        val sm = 20
-        val md = 24
-        val lg = 32
-        val xl = 40
-        val xxl = 48
     }
 
     object Radius {

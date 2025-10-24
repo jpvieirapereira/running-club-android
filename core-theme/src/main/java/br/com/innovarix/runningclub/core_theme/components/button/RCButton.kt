@@ -2,7 +2,6 @@ package br.com.innovarix.runningclub.core_theme.components.button
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,7 +40,7 @@ private fun RCButton(
     contentPadding = ButtonDefaults.ContentPadding,
     modifier = modifier
         .fillMaxWidth()
-        .height(RCSize.Spacing.xxl),
+        .height(RCSize.Spacing.xll),
     colors = ButtonColors(
         containerColor = colors.color,
         contentColor = colors.contentColor,
