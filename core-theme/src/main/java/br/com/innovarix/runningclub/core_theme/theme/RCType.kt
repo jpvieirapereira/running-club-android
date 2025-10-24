@@ -1,4 +1,4 @@
-package br.com.innovarix.runningclub.core_theme
+package br.com.innovarix.runningclub.core_theme.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
