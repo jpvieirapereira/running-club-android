@@ -14,11 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.innovarix.runningclub.R
 import br.com.innovarix.runningclub.core_theme.components.button.RCButtonText
 import br.com.innovarix.runningclub.core_theme.components.input.RCInput
+import br.com.innovarix.runningclub.core_theme.components.input.RCMaskVisualTransformation
 import br.com.innovarix.runningclub.core_theme.components.text.RCText
 import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbar
 import br.com.innovarix.runningclub.core_theme.theme.RCColors
@@ -27,7 +29,8 @@ import br.com.innovarix.runningclub.core_theme.theme.RCSize
 @Composable
 fun RCRegisterScreen(
     modifier: Modifier = Modifier,
-    onClick: (() -> Unit?)? = null
+    state: RCRegisterUiState,
+    action: (RCRegisterUiAction) -> Unit
 ) {
 
     Column(
@@ -35,7 +38,7 @@ fun RCRegisterScreen(
             .fillMaxSize()
             .background(color = RCColors.Light)
     ) {
-        RCToolbar(onClick = onClick)
+        RCToolbar(onClick = { action.invoke(RCRegisterUiAction.OnTollbarClicked) })
 
         Column(
             verticalArrangement = Arrangement.SpaceAround,
@@ -45,15 +48,19 @@ fun RCRegisterScreen(
         ) {
             Header()
 
-            Fields(onValueChange = { type, s -> })
+            Fields(
+                state.fields,
+                onValueChange = { field -> action.invoke(RCRegisterUiAction.OnChangeFields(field))})
 
             RCButtonText(
                 modifier = Modifier.padding(
                     horizontal = RCSize.Spacing.md,
                     vertical = RCSize.Spacing.xl
                 ),
-                text = stringResource(R.string.rc_register_advance)
+                text = stringResource(R.string.rc_register_advance),
+                isEnabled = state.enableButton
             ) {
+                action.invoke(RCRegisterUiAction.OnAdvanceClicked)
             }
         }
     }
@@ -91,17 +98,24 @@ private fun Header() {
 
 @Composable
 private fun Fields(
-    onValueChange: (type: RCRegisterInputTypes, String) -> Unit
+    fields: List<RCRegisterUiModel>,
+    onValueChange: (field: RCRegisterUiModel) -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
-        modifier = Modifier.fillMaxWidth().padding(horizontal = RCSize.Spacing.md)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = RCSize.Spacing.md)
     ) {
-        RCRegisterInputTypes.entries.forEach { type ->
+        fields.forEach { field ->
             RCInput(
-                label = stringResource(type.label),
+                value = field.value,
+                label = stringResource(field.type.label),
+                error = field.validationError()?.let { stringResource(it) },
+                keyboardOptions = field.type.keyboardOptions,
+                visualTransformation = field.type.maskTransformation ?: VisualTransformation.None,
                 onValueChange = { value ->
-                    onValueChange.invoke(type, value)
+                    onValueChange.invoke(field.copy(value = value))
                 }
             )
         }
@@ -111,5 +125,5 @@ private fun Fields(
 @Preview(showBackground = true)
 @Composable
 fun RegisterPreview() {
-    RCRegisterScreen()
+   // RCRegisterScreen()
 }
