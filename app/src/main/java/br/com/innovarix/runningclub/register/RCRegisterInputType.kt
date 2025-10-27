@@ -19,7 +19,8 @@ enum class RCRegisterInputType(
     @StringRes val validationError: Int,
     val maskTransformation: VisualTransformation? = null,
     val keyboardOptions: KeyboardOptions,
-    val maxLength: Int = 80
+    val maxLength: Int = 80,
+    val minLength: Int = 0
 ) {
     NAME(
         R.string.rc_register_label_name,
@@ -29,7 +30,8 @@ enum class RCRegisterInputType(
             capitalization = KeyboardCapitalization.Words,
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next
-        )
+        ),
+        minLength = 5
     ),
     CPF(
         R.string.rc_register_label_cpf,
@@ -39,7 +41,8 @@ enum class RCRegisterInputType(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next
         ),
-        11
+        11,
+        minLength = 11
     ),
     BIRTH_DATE(
         R.string.rc_register_label_birthdate,
@@ -49,7 +52,8 @@ enum class RCRegisterInputType(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next
         ),
-        8
+        8,
+        minLength = 8
     ),
     E_MAIL(
         R.string.rc_register_label_email,
@@ -59,7 +63,8 @@ enum class RCRegisterInputType(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next
         ),
-        50
+        50,
+        minLength = 4
     ),
     PHONE_NUMBER(
         R.string.rc_register_label_phone,
@@ -69,7 +74,8 @@ enum class RCRegisterInputType(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next
         ),
-        11
+        11,
+        minLength = 11
     ),
     PASSWORD(
         R.string.rc_register_label_password,
@@ -79,6 +85,7 @@ enum class RCRegisterInputType(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done
         ),
-        20
+        20,
+        minLength = 5
     )
 }

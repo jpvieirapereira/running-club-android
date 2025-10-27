@@ -9,11 +9,11 @@
     <string name="rc_register_label_email">E-mail</string>
     <string name="rc_register_label_phone">Telefone</string>
     <string name="rc_register_label_password">Senha</string>
-    <string name="rc_register_error_name">Nome é obrigatório</string>
-    <string name="rc_register_error_cpf">CPF é obrigatório</string>
-    <string name="rc_register_error_birthdate">Data de nascimento é obrigatório</string>
-    <string name="rc_register_error_email">E-mail é obrigatório</string>
-    <string name="rc_register_error_phone">Telefone é obrigatório</string>
-    <string name="rc_register_error_password">Senha é obrigatíro</string>
+    <string name="rc_register_error_name">Nome inválido</string>
+    <string name="rc_register_error_cpf">CPF inválido</string>
+    <string name="rc_register_error_birthdate">Data de nascimento inválida</string>
+    <string name="rc_register_error_email">E-mail inválida</string>
+    <string name="rc_register_error_phone">Telefone inválido</string>
+    <string name="rc_register_error_password">Senha é inválida</string>
     <string name="rc_register_advance">Avançar</string>
 </resources>
