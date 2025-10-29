@@ -2,18 +2,23 @@ package br.com.innovarix.runningclub.core_theme.components.input
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
@@ -30,6 +35,18 @@ fun RCInput(
     enabled: Boolean = true,
     label: String? = null,
     error: String? = null,
+    readOnly: Boolean = false,
+    shape: Shape = RectangleShape,
+    colors: TextFieldColors = TextFieldDefaults.colors().copy(
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
+        cursorColor = Color.Black,
+        focusedIndicatorColor = Color.Black,
+        unfocusedLabelColor = Color.Black,
+        errorContainerColor = Color.Transparent
+    ),
+    textStyle: TextStyle = TextStyle.Default,
+    trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -41,18 +58,14 @@ fun RCInput(
         label = if (!label.isNullOrEmpty()) {
             { RCText(text = label) }
         } else null,
-        colors = TextFieldDefaults.colors().copy(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            cursorColor = Color.Black,
-            focusedIndicatorColor = Color.Black,
-            unfocusedLabelColor = Color.Black,
-            errorContainerColor = Color.Transparent
-        ),
+        colors = colors,
+        textStyle = textStyle,
+        readOnly = readOnly,
+        trailingIcon = trailingIcon,
         visualTransformation = visualTransformation,
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,
-        shape = RectangleShape,
+        shape = shape,
         value = value,
         onValueChange = onValueChange,
         enabled = enabled,

@@ -1,7 +1,6 @@
 package br.com.innovarix.runningclub.register
 
 import android.util.Log
-import androidx.compose.ui.Modifier
 import br.com.innovarix.runningclub.core.base.ViewModel
 import br.com.innovarix.runningclub.core.extensions.isValidBirthdate
 import br.com.innovarix.runningclub.core.extensions.isValidCpf

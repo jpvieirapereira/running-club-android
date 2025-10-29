@@ -1,17 +1,24 @@
 package br.com.innovarix.runningclub.register
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
@@ -33,25 +40,19 @@ fun RCRegisterScreen(
     action: (RCRegisterUiAction) -> Unit
 ) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = RCColors.Light)
-    ) {
-        RCToolbar(onClick = { action.invoke(RCRegisterUiAction.OnTollbarClicked) })
-
-        Column(
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = modifier.verticalScroll(
-                rememberScrollState()
-            )
-        ) {
-            Header()
-
+    RCRegisterToolbar(
+        modifier = modifier,
+        subTitle = R.string.rc_register_subtitle,
+        description = R.string.rc_register_header,
+        onToolbarClicked = {
+            action.invoke(RCRegisterUiAction.OnTollbarClicked)
+        },
+        content = {
             Fields(
                 state.fields,
-                onValueChange = { field -> action.invoke(RCRegisterUiAction.OnChangeFields(field))})
-
+                onValueChange = { field -> action.invoke(RCRegisterUiAction.OnChangeFields(field)) })
+        },
+        button = {
             RCButtonText(
                 modifier = Modifier.padding(
                     horizontal = RCSize.Spacing.md,
@@ -63,11 +64,49 @@ fun RCRegisterScreen(
                 action.invoke(RCRegisterUiAction.OnAdvanceClicked)
             }
         }
+    )
+}
+
+@Composable
+fun RCRegisterToolbar(
+    modifier: Modifier = Modifier,
+    @StringRes subTitle: Int,
+    @StringRes description: Int,
+    content: @Composable ColumnScope.() -> Unit,
+    button: @Composable () -> Unit,
+    onToolbarClicked: (() -> Unit?)? = null
+) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = RCColors.Light)
+    ) {
+        RCToolbar(onClick = onToolbarClicked)
+
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .height(IntrinsicSize.Max)
+        ) {
+            RCRegisterHeader(
+                subTitle = subTitle,
+                description = description
+            )
+
+            content()
+            Spacer(modifier = Modifier.weight(1f))
+            button()
+        }
     }
 }
 
 @Composable
-private fun Header() {
+fun RCRegisterHeader(
+    @StringRes subTitle: Int,
+    @StringRes description: Int
+) {
     Column(modifier = Modifier.padding(horizontal = RCSize.Spacing.md)) {
         RCText(
             text = stringResource(R.string.rc_register_title),
@@ -78,7 +117,7 @@ private fun Header() {
         Spacer(modifier = Modifier.height(RCSize.Spacing.lg))
 
         RCText(
-            text = stringResource(R.string.rc_register_subtitle),
+            text = stringResource(subTitle),
             color = RCColors.Beige,
             fontSize = RCSize.Text.xl,
             fontStyle = FontWeight.W800
@@ -87,7 +126,7 @@ private fun Header() {
         Spacer(modifier = Modifier.height(RCSize.Spacing.xxl))
 
         RCText(
-            text = stringResource(R.string.rc_register_header),
+            text = stringResource(description),
             fontSize = RCSize.Text.md,
             fontStyle = FontWeight.SemiBold
         )
@@ -120,10 +159,4 @@ private fun Fields(
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun RegisterPreview() {
-   // RCRegisterScreen()
 }

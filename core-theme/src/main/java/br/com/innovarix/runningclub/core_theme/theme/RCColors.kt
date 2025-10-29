@@ -5,8 +5,10 @@ import androidx.compose.ui.graphics.Color
 object RCColors {
     val Black = Color(0xFF000000)
 
+    val DarkGray = Color(0xFF7A8181)
     val Gray = Color(0xFFA0A0A0)
     val LightGray = Color(0xFFF3EDE3)
+    val LightingGray = Color(0xFFF1F5F4)
     val Light = Color(0xFFFFFDFD)
     val White = Color(0xFFFFFFFF)
 

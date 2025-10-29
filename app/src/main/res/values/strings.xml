@@ -16,4 +16,12 @@
     <string name="rc_register_error_phone">Telefone inválido</string>
     <string name="rc_register_error_password">Senha é inválida</string>
     <string name="rc_register_advance">Avançar</string>
+    <string name="rc_register_finish_header">Informações Adicionais:</string>
+    <string name="rc_register_finish_subtitle">Deixa eu te conhecer melhor.</string>
+    <string name="rc_register_finish_surname">Qual apelido deseja usar?</string>
+    <string name="rc_register_finish_level">Qual nível se considera?</string>
+    <string name="rc_register_finish_availability_training">Disponibilidade de treino?</string>
+    <string name="rc_register_finish_challenge">Desafio próximo mês?</string>
+    <string name="rc_register_finish_terms">Termo de aceite para prática de atividade física</string>
+
 </resources>
