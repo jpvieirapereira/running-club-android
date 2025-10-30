@@ -10,6 +10,7 @@
     <string name="rc_register_label_phone">Telefone</string>
     <string name="rc_register_label_password">Senha</string>
     <string name="rc_register_error_name">Nome inválido</string>
+    <string name="rc_register_error_surname">Apelido inválido</string>
     <string name="rc_register_error_cpf">CPF inválido</string>
     <string name="rc_register_error_birthdate">Data de nascimento inválida</string>
     <string name="rc_register_error_email">E-mail inválida</string>

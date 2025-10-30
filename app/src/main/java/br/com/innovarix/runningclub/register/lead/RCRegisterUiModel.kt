@@ -1,4 +1,4 @@
-package br.com.innovarix.runningclub.register
+package br.com.innovarix.runningclub.register.lead
 
 data class RCRegisterUiModel(
     val type: RCRegisterInputType,

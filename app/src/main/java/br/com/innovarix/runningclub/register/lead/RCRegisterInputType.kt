@@ -1,4 +1,4 @@
-package br.com.innovarix.runningclub.register
+package br.com.innovarix.runningclub.register.lead
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.text.KeyboardOptions

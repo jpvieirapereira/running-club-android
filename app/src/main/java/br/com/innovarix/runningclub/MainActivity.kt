@@ -16,8 +16,11 @@ import br.com.innovarix.runningclub.core_theme.components.input.RCInput
 import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbar
 import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbarStyleType
 import br.com.innovarix.runningclub.core_theme.theme.RunningClubTheme
-import br.com.innovarix.runningclub.register.RCRegisterScreen
-import br.com.innovarix.runningclub.register.RCRegisterViewModel
+import br.com.innovarix.runningclub.register.finish.RCRegisterFinishScreen
+import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiAction
+import br.com.innovarix.runningclub.register.finish.RCRegisterFinishViewModel
+import br.com.innovarix.runningclub.register.lead.RCRegisterScreen
+import br.com.innovarix.runningclub.register.lead.RCRegisterViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +29,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RunningClubTheme {
-                val viewModel: RCRegisterViewModel by viewModel()
+                val viewModel: RCRegisterFinishViewModel by viewModel()
 
                 val state = viewModel.state.collectAsStateWithLifecycle().value
 
@@ -35,7 +38,9 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .padding(innerPadding)) {
 
-                        RCRegisterScreen(
+                        viewModel.dispatchAction(RCRegisterFinishUiAction.OnInit)
+
+                        RCRegisterFinishScreen(
                             state = state,
                             action = viewModel::dispatchAction
                         )
