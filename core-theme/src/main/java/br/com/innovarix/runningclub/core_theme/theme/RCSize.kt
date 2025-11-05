@@ -58,11 +58,12 @@ object RCSize {
         /** LG: 18sp*/
         val lg = 18.sp
         /** XL: 20sp*/
-        val xl = 20.sp
+        val xl = 22.sp
         /** XXL: 24sp*/
         val xxl = 24.sp
         /** XXXL: 28sp*/
         val xxxl = 28.sp
+        val xxxxl = 36.sp
     }
 
     object Border {

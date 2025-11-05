@@ -15,7 +15,7 @@ enum class RCButtonStyleType(
     ),
     SECONDARY(
         RCColors.Beige,
-        RCColors.Black,
+        RCColors.White,
         Color.Transparent
     )
 }

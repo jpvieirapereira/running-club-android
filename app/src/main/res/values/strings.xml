@@ -25,4 +25,11 @@
     <string name="rc_register_finish_challenge">Desafio próximo mês?</string>
     <string name="rc_register_finish_terms">Termo de aceite para prática de atividade física</string>
 
+    <!-- Feedback -->
+    <string name="rc_feedback_success">Pagamento\n realizado com sucesso.</string>
+    <string name="rc_feedback_success_description">Chegou a hora de iniciar os treinos!</string>
+    <string name="rc_feedback_button_success_text">Login</string>
+    <string name="rc_feedback_error">Pagamento\n não realizado.</string>
+    <string name="rc_feedback_error_description">Reveja os dados do cartão!</string>
+    <string name="rc_feedback_button_error_text">Voltar</string>
 </resources>
