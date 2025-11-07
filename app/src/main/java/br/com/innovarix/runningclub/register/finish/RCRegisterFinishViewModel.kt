@@ -5,6 +5,7 @@ import br.com.innovarix.runningclub.core.extensions.orZero
 import br.com.innovarix.runningclub.core.extensions.unMask
 import br.com.innovarix.runningclub.register.domain.RCLevelType
 import br.com.innovarix.runningclub.register.domain.RCOptionModel
+import br.com.innovarix.runningclub.register.domain.RCRegisterModel
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishInputType.*
 import br.com.innovarix.runningclub.register.lead.RCRegisterInputType
 
@@ -16,14 +17,14 @@ class RCRegisterFinishViewModel : ViewModel<
 
     override fun dispatchAction(action: RCRegisterFinishUiAction) {
         when (action) {
-            RCRegisterFinishUiAction.OnInit -> onInit()
+            is RCRegisterFinishUiAction.OnInit -> onInit(action.register)
             RCRegisterFinishUiAction.OnTollbarClicked -> onToolbarClicked()
             is RCRegisterFinishUiAction.OnChangeFields -> onChangeField(action.data)
             RCRegisterFinishUiAction.OnAdvanceClicked -> onAdvanceClicked()
         }
     }
 
-    private fun onInit() {
+    private fun onInit(register: RCRegisterModel) {
 
         val optionSurname = RCRegisterFinishUiModel(
             type = SURNAME
@@ -80,7 +81,7 @@ class RCRegisterFinishViewModel : ViewModel<
         val currentState = state.value.options
 
         val newList = currentState.map { field ->
-            return@map when (field.type) {
+            return@map when (data.type) {
                 SURNAME -> {
                     if (data.surName?.length.orZero() <= RCRegisterInputType.NAME.maxLength) {
                         field.copy(surName = data.surName)
@@ -107,7 +108,7 @@ class RCRegisterFinishViewModel : ViewModel<
     }
 
     private fun onToolbarClicked() {
-
+        sendEvent { RCRegisterFinishUiEvent.OnBackPressed }
     }
 
     private fun onAdvanceClicked() {

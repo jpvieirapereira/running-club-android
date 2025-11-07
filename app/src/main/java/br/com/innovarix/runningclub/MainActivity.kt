@@ -9,19 +9,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.ui.NavDisplay
 import br.com.innovarix.runningclub.core_theme.components.input.RCInput
 import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbar
 import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbarStyleType
 import br.com.innovarix.runningclub.core_theme.theme.RunningClubTheme
+import br.com.innovarix.runningclub.register.domain.RCRegisterModel
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishScreen
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiAction
+import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiEvent
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishViewModel
 import br.com.innovarix.runningclub.register.lead.RCRegisterScreen
+import br.com.innovarix.runningclub.register.lead.RCRegisterUiEvent
 import br.com.innovarix.runningclub.register.lead.RCRegisterViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import br.com.innovarix.runningclub.register.navigation.RCRegisterNavigation
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,24 +39,85 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RunningClubTheme {
-                val viewModel: RCRegisterFinishViewModel by viewModel()
-
-                val state = viewModel.state.collectAsStateWithLifecycle().value
-
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)) {
-
-                        viewModel.dispatchAction(RCRegisterFinishUiAction.OnInit)
-
-                        RCRegisterFinishScreen(
-                            state = state,
-                            action = viewModel::dispatchAction
-                        )
-
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        RegisterNavigation()
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun RegisterNavigation() {
+    val backStack = remember { mutableStateListOf<RCRegisterNavigation>(RCRegisterNavigation.Lead) }
+
+    NavDisplay(
+        backStack = backStack,
+        onBack = { backStack.removeAt(backStack.lastIndex) },
+        entryProvider = { key ->
+            when (key) {
+                RCRegisterNavigation.Lead -> NavEntry(key) {
+                    StartRegister(backStack = backStack)
+                }
+
+                is RCRegisterNavigation.Register -> NavEntry(key) {
+                    FinishRegister(backStack, key.register)
+                }
+
+                else -> {
+                    error("Unknown route: $key")
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun StartRegister(backStack: SnapshotStateList<RCRegisterNavigation>) {
+    val viewModel: RCRegisterViewModel = koinViewModel()
+
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
+    RCRegisterScreen(state = state) { action ->
+        viewModel.dispatchAction(action)
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is RCRegisterUiEvent.NavigateToFinish -> {
+                    backStack.add(RCRegisterNavigation.Register(event.register))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FinishRegister(
+    backStack: SnapshotStateList<RCRegisterNavigation>,
+    register: RCRegisterModel
+) {
+    val viewModel: RCRegisterFinishViewModel = koinViewModel()
+
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
+    RCRegisterFinishScreen(state = state) { action ->
+        viewModel.dispatchAction(action)
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.dispatchAction(RCRegisterFinishUiAction.OnInit(register))
+
+        viewModel.event.collect { event ->
+            when (event) {
+                RCRegisterFinishUiEvent.OnBackPressed -> backStack.removeAt(backStack.lastIndex)
             }
         }
     }
