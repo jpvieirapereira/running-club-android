@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import br.com.innovarix.runningclub.core_theme.R
 
 @Composable
-fun CFLocalImage(
+fun RCLocalImage(
     modifier: Modifier = Modifier,
     colorFilter: ColorFilter? = null,
     @DrawableRes localImage: Int,
@@ -45,13 +45,13 @@ fun CFLocalImage(
 @Preview
 @Composable
 private fun Preview() = Column(modifier = Modifier.fillMaxSize()) {
-    CFLocalImage(
+    RCLocalImage(
         localImage = R.drawable.ic_check_erro,
         width = 32,
         height = 32
     )
 
-    CFLocalImage(
+    RCLocalImage(
         localImage = R.drawable.ic_check_success,
         width = 100,
         height = 100)

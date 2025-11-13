@@ -128,13 +128,7 @@ fun FinishRegister(
 fun GreetingPreview() {
     RunningClubTheme {
         Column {
-            RCInput(label = "Nome completo")
-
-            RCInput(label = "Nome completo", value = "jose", error = "Campo obrigatório")
-
-            RCToolbar(text = "Teste Nivelamento")
-
-            RCToolbar(colors = RCToolbarStyleType.SECONDARY, text = "Teste Nivelamento")
+            RCFeedBackScreen(feedBackUiModel = RCFeedBackUiModel(RCFeedBackType.SUCCESS))
         }
     }
 }
