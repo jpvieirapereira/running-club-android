@@ -4,4 +4,5 @@ import br.com.innovarix.runningclub.core.base.UiEvent
 
 sealed interface RCRegisterFinishUiEvent : UiEvent {
     data object OnBackPressed: RCRegisterFinishUiEvent
+    data object NavigateToSelectPlan: RCRegisterFinishUiEvent
 }

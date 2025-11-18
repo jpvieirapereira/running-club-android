@@ -20,6 +20,7 @@ class RCRegisterFinishViewModel : ViewModel<
             is RCRegisterFinishUiAction.OnInit -> onInit(action.register)
             RCRegisterFinishUiAction.OnTollbarClicked -> onToolbarClicked()
             is RCRegisterFinishUiAction.OnChangeFields -> onChangeField(action.data)
+            RCRegisterFinishUiAction.OnTermsClicked -> {}
             RCRegisterFinishUiAction.OnAdvanceClicked -> onAdvanceClicked()
         }
     }
@@ -114,5 +115,6 @@ class RCRegisterFinishViewModel : ViewModel<
     private fun onAdvanceClicked() {
         val currentState = state.value.options
 
+        sendEvent { RCRegisterFinishUiEvent.NavigateToSelectPlan }
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import br.com.innovarix.runningclub.R
 import br.com.innovarix.runningclub.core_theme.components.button.RCButtonText
+import br.com.innovarix.runningclub.core_theme.components.check.RCCheckBox
 import br.com.innovarix.runningclub.core_theme.components.dropdown.RCDropDownTitle
 import br.com.innovarix.runningclub.core_theme.components.input.RCInput
 import br.com.innovarix.runningclub.core_theme.components.text.RCText
@@ -22,6 +23,7 @@ import br.com.innovarix.runningclub.core_theme.theme.RCSize
 import br.com.innovarix.runningclub.register.domain.RCLevelType
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishInputType.*
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiAction.OnChangeFields
+import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiAction.OnTermsClicked
 import br.com.innovarix.runningclub.register.lead.RCRegisterToolbar
 import br.com.innovarix.runningclub.register.lead.RCRegisterUiAction
 import br.com.innovarix.runningclub.register.lead.RCRegisterUiState
@@ -59,7 +61,7 @@ fun RCRegisterFinishScreen(
                                     imeAction = ImeAction.Next
                                 ),
                                 onValueChange = { value ->
-                                   action.invoke(OnChangeFields(field.copy(surName = value)))
+                                    action.invoke(OnChangeFields(field.copy(surName = value)))
                                 }
                             )
                         }
@@ -81,7 +83,18 @@ fun RCRegisterFinishScreen(
                             }
                         }
 
-                        TERMS -> {}
+                        TERMS -> {
+                            RCCheckBox(
+                                description = stringResource(field.type.label),
+                                isChecked = field.termsChecked,
+                                onChecked = { checked ->
+                                    action.invoke(OnChangeFields(field.copy(termsChecked = checked)))
+                                },
+                                onDescriptionClicked = {
+                                    action.invoke(OnTermsClicked)
+                                }
+                            )
+                        }
                     }
 
                 }

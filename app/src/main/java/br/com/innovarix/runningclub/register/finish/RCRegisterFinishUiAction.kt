@@ -7,5 +7,6 @@ sealed interface RCRegisterFinishUiAction : UiAction {
     data class OnInit(val register: RCRegisterModel) : RCRegisterFinishUiAction
     data object OnTollbarClicked : RCRegisterFinishUiAction
     data class OnChangeFields(val data: RCRegisterFinishUiModel) : RCRegisterFinishUiAction
+    data object OnTermsClicked: RCRegisterFinishUiAction
     data object OnAdvanceClicked : RCRegisterFinishUiAction
 }

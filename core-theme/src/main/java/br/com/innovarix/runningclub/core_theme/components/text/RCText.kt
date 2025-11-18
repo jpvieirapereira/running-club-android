@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
 import br.com.innovarix.runningclub.core_theme.theme.RCSize
 
@@ -18,7 +19,8 @@ fun RCText(
     fontSize: TextUnit = RCSize.Text.sm,
     fontStyle: FontWeight = FontWeight.Normal,
     textAlign: TextAlign? = null,
-    textStyle: TextStyle = TextStyle.Default
+    textStyle: TextStyle = TextStyle.Default,
+    textDecoration: TextDecoration = TextDecoration.None
 ) {
     Text(
         textAlign = textAlign,
@@ -27,6 +29,7 @@ fun RCText(
         modifier = modifier,
         fontSize = fontSize,
         fontWeight = fontStyle,
-        style = textStyle
+        style = textStyle,
+        textDecoration = textDecoration
     )
 }

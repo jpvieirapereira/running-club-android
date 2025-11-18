@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +32,9 @@ fun RCPlanPrice(
     onPriceSelected: (price: RCPlanPriceUiModel) -> Unit = {}
 ) {
 
-    val isSelected by remember { mutableStateOf(priceUiModel.isSelected) }
+    val shape = RoundedCornerShape(28.dp)
 
-    val borderModifier = if(isSelected) {
+    val borderModifier = if(priceUiModel.isSelected) {
         Modifier.border(
             border = BorderStroke(
                 width = 5.dp,
@@ -41,7 +42,7 @@ fun RCPlanPrice(
                     listOf(RCColors.Beige, RCColors.Beige.copy(alpha = 0.8f))
                 )
             ),
-            shape = RoundedCornerShape(28.dp)
+            shape = shape
         )
     } else {
         Modifier
@@ -49,9 +50,12 @@ fun RCPlanPrice(
 
     Column(
         modifier = modifier
+            .clip(shape)
+            .clickable {
+                onPriceSelected.invoke(priceUiModel.copy(isSelected = priceUiModel.isSelected.not()))
+            }
             .width(180.dp)
-            .background(color = RCColors.Black, shape = RoundedCornerShape(28.dp))
-            .clickable { onPriceSelected.invoke(priceUiModel) }
+            .background(color = RCColors.Black)
             .then(borderModifier),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -75,6 +79,7 @@ fun RCPlanPrice(
 }
 
 data class RCPlanPriceUiModel(
+    val id: String,
     val description: String,
     val price: String,
     val isSelected: Boolean = false

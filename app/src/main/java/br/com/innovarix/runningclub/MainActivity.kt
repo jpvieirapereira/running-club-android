@@ -18,19 +18,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
-import br.com.innovarix.runningclub.core_theme.components.input.RCInput
-import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbar
-import br.com.innovarix.runningclub.core_theme.components.toolbar.RCToolbarStyleType
 import br.com.innovarix.runningclub.core_theme.theme.RunningClubTheme
+import br.com.innovarix.runningclub.feedback.RCFeedBackScreen
+import br.com.innovarix.runningclub.feedback.RCFeedBackType
+import br.com.innovarix.runningclub.feedback.RCFeedBackUiModel
 import br.com.innovarix.runningclub.register.domain.RCRegisterModel
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishScreen
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiAction
-import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiEvent
+import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiEvent.NavigateToSelectPlan
+import br.com.innovarix.runningclub.register.finish.RCRegisterFinishUiEvent.OnBackPressed
 import br.com.innovarix.runningclub.register.finish.RCRegisterFinishViewModel
 import br.com.innovarix.runningclub.register.lead.RCRegisterScreen
 import br.com.innovarix.runningclub.register.lead.RCRegisterUiEvent
 import br.com.innovarix.runningclub.register.lead.RCRegisterViewModel
 import br.com.innovarix.runningclub.register.navigation.RCRegisterNavigation
+import br.com.innovarix.runningclub.register.plans.RCRegisterPlansOffersScreen
+import br.com.innovarix.runningclub.register.plans.RCRegisterPlansOffersUiAction
+import br.com.innovarix.runningclub.register.plans.RCRegisterPlansOffersUiEvent
+import br.com.innovarix.runningclub.register.plans.RCRegisterPlansOffersViewModel
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -68,6 +74,10 @@ fun RegisterNavigation() {
 
                 is RCRegisterNavigation.Register -> NavEntry(key) {
                     FinishRegister(backStack, key.register)
+                }
+
+                RCRegisterNavigation.Plans -> NavEntry(key) {
+                    SelectPlan(backStack)
                 }
 
                 else -> {
@@ -117,7 +127,29 @@ fun FinishRegister(
 
         viewModel.event.collect { event ->
             when (event) {
-                RCRegisterFinishUiEvent.OnBackPressed -> backStack.removeAt(backStack.lastIndex)
+                OnBackPressed -> backStack.removeAt(backStack.lastIndex)
+                NavigateToSelectPlan -> backStack.add(RCRegisterNavigation.Plans)
+            }
+        }
+    }
+}
+
+@Composable
+fun SelectPlan(backStack: SnapshotStateList<RCRegisterNavigation>) {
+    val viewModel: RCRegisterPlansOffersViewModel = koinViewModel()
+
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
+    RCRegisterPlansOffersScreen(state = state) { action ->
+        viewModel.dispatchAction(action)
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.dispatchAction(RCRegisterPlansOffersUiAction.OnInit)
+
+        viewModel.event.collect { event ->
+            when(event) {
+                RCRegisterPlansOffersUiEvent.OnBackPressed -> backStack.removeAt(backStack.lastIndex)
             }
         }
     }

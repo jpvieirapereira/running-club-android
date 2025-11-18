@@ -65,7 +65,7 @@ fun RCRegisterScreen(
 fun RCRegisterToolbar(
     modifier: Modifier = Modifier,
     @StringRes subTitle: Int,
-    @StringRes description: Int,
+    @StringRes description: Int? = null,
     content: @Composable ColumnScope.() -> Unit,
     button: @Composable () -> Unit,
     onToolbarClicked: (() -> Unit?)? = null
@@ -99,7 +99,7 @@ fun RCRegisterToolbar(
 @Composable
 fun RCRegisterHeader(
     @StringRes subTitle: Int,
-    @StringRes description: Int
+    @StringRes description: Int? = null
 ) {
     Column(modifier = Modifier.padding(horizontal = RCSize.Spacing.md)) {
         RCText(
@@ -119,13 +119,15 @@ fun RCRegisterHeader(
 
         Spacer(modifier = Modifier.height(RCSize.Spacing.xxl))
 
-        RCText(
-            text = stringResource(description),
-            fontSize = RCSize.Text.md,
-            fontStyle = FontWeight.SemiBold
-        )
+        description?.let {
+            RCText(
+                text = stringResource(description),
+                fontSize = RCSize.Text.md,
+                fontStyle = FontWeight.SemiBold
+            )
 
-        Spacer(modifier = Modifier.height(RCSize.Spacing.md))
+            Spacer(modifier = Modifier.height(RCSize.Spacing.md))
+        }
     }
 }
 
